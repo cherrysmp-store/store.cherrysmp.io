@@ -31,8 +31,8 @@ nav a:hover{color:#ff2d55;}
 .categories{display:flex; justify-content:center; gap:50px; padding:60px 20px; flex-wrap:wrap; position:relative;}
 .card{background:#1c1c2e;padding:30px 20px;width:280px;border-radius:16px;text-align:center;transition:0.4s;cursor:pointer;position:relative;overflow:hidden;}
 .card:hover{transform:translateY(-10px) scale(1.05);background:#222232;}
-.card h3{margin-top:10px;font-size:22px;}
-.card p{color:#000;font-size:15px;margin:15px 0 25px;font-weight:bold;}
+.card h3{margin-top:10px;font-size:22px;color:#fff;font-weight:bold;}
+.card p{color:#fff;font-size:15px;margin:15px 0 25px;font-weight:bold;}
 
 /* Footer */
 footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14px;}
@@ -40,14 +40,14 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 /* Pop-up Modals */
 .modal{display:none;position:fixed;z-index:200;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.8);width:90%;max-width:600px;padding:20px;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.7);opacity:0;pointer-events:none;transition:0.4s;}
 .modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
-.modal h2{text-align:center;margin-top:0;font-weight:bold;color:#000;}
+.modal h2{text-align:center;margin-top:0;font-weight:bold;color:#fff;}
 .items-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
 .item{background:#ffe6f0;border-radius:12px;padding:12px;text-align:center;transition:0.3s;position:relative;cursor:pointer;}
 .item:hover{background:#ffc0d9;transform:scale(1.03);}
-.item h3{margin:5px 0;font-size:16px;font-weight:bold;color:#000;}
-.item p{font-size:14px;color:#000;margin:3px 0;font-weight:bold;}
-.item .price{font-weight:bold;font-size:16px;background:linear-gradient(90deg,#ff00ff,#000);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.item .original{text-decoration:line-through;color:#555;margin-left:5px;font-weight:bold;}
+.item h3{margin:5px 0;font-size:16px;font-weight:bold;color:#fff;}
+.item p{font-size:14px;color:#fff;margin:3px 0;font-weight:bold;}
+.item .price{font-weight:bold;font-size:16px;color:#fff;}
+.item .original{text-decoration:line-through;color:#bbb;margin-left:5px;font-weight:bold;}
 .buy-button{padding:6px 10px;border-radius:8px;border:none;margin-top:6px;color:white;cursor:pointer;transition:0.3s;font-weight:bold;background:#ff2d55;}
 .buy-button:hover{opacity:0.8;transform:scale(1.1);}
 
@@ -59,13 +59,13 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 .crate-elite{background:gray;}
 .crate-ultra{background:orange;}
 .crate-cherry{background:red;}
-.cherry-item{background:linear-gradient(90deg,#ff00ff,#000);}
+.cherry-item{background:linear-gradient(90deg,#ff00ff,#000);color:#fff;font-weight:bold;}
 
-/* Cherry Clicker Modal Pink/Red */
-#clickerModal{background:linear-gradient(135deg,#ff79aa,#ff2d55);}
+/* Cherry Clicker Modal fully visible */
+#clickerModal{background:linear-gradient(135deg,#ff79aa,#ff2d55);opacity:1 !important;}
 
 /* Cherry Clicker Display */
-#clicker-display{cursor:pointer;transition:transform 0.2s;font-size:80px;font-weight:bold;color:#fff; text-shadow: 1px 1px 5px #ffb3d9;}
+#clicker-display{cursor:pointer;transition:transform 0.2s;font-size:80px;font-weight:bold;color:#fff; text-shadow:1px 1px 5px #ffb3d9;}
 </style>
 </head>
 <body>
@@ -179,6 +179,7 @@ clickerDisplay.onclick=function(){
   updateCherryDisplay();
   clickCooldown=true;
   clickerDisplay.style.transform='scale(1.4)';
+  document.getElementById('click-sound').play();
   setTimeout(()=>{clickCooldown=false;clickerDisplay.style.transform='scale(1)';},1000);
 };
 
