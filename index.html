@@ -6,6 +6,7 @@
 <title>CherrySMP Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+/* Reset & general */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#ff2d55,#ff79aa);color:#fff;overflow-x:hidden;position:relative;}
 
@@ -48,13 +49,10 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 .item p{font-size:14px;color:#ccc;margin:3px 0;}
 .item .price{font-weight:bold;font-size:16px;margin-top:5px;}
 .item .original{text-decoration:line-through;color:#aaa;margin-left:5px;}
-.buy-button{padding:6px 10px;border-radius:8px;border:none;margin-top:6px;color:white;cursor:pointer;transition:0.3s;position:relative;overflow:hidden;}
+.buy-button{padding:6px 10px;border-radius:8px;border:none;margin-top:6px;color:white;cursor:pointer;transition:0.3s;}
 .buy-button:hover{opacity:0.8;}
 
-/* Buy button sparkle effect */
-.sparkle{position:absolute;font-size:14px;animation:sparkleUp 0.8s forwards;pointer-events:none;}
-@keyframes sparkleUp{0%{opacity:1;transform:translateY(0) scale(1);}100%{opacity:0;transform:translateY(-30px) scale(1.5);}}
-
+/* Colors */
 .rank-ultra{background:orange;}
 .rank-cherry{background:red;}
 .rank-cherryplus{background:pink;}
@@ -69,6 +67,7 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 </head>
 <body>
 
+<!-- Audio -->
 <audio id="bg-music" src="chill_cherry_biome.mp3" loop autoplay></audio>
 <audio id="click-sound" src="click.mp3"></audio>
 
@@ -98,10 +97,59 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 <div class="card" onclick="openModal('clickerModal')"><h3>🍒 Cherry Clicker</h3><p>Click to earn cherries!</p></div>
 </div>
 
+<!-- Cherry clicker main -->
 <div id="cherry-counter">🍒 0</div>
 
-<!-- All modals (Ranks, Crates, Cherries, Clicker, Buy) go here -->
-<!-- Use the same modal structure as before -->
+<!-- Ranks Modal -->
+<div id="ranksModal" class="modal">
+<h2>🏆 Ranks (15% Off)</h2>
+<div class="items-grid">
+<div class="item rank-ultra"><h3>Ultra</h3><p>3 homes<br>10 auction sells<br>5 orders<br>Own kit every 7 days<br>/workbench<br>AFK +1 cherry/50s</p><p class="price">€2.12<span class="original">€2.49</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item rank-cherryplus"><h3>Cherry+</h3><p>5 homes<br>20 auction sells<br>7 orders<br>Own kit every 7 days<br>/loom<br>AFK +1 cherry/30s</p><p class="price">€7.64<span class="original">€8.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item rank-cherry"><h3>Cherry</h3><p>4 homes<br>15 auction sells<br>7 orders<br>Own kit every 7 days<br>/anvil /grindstone /smithing table<br>AFK +1 cherry/40s</p><p class="price">€4.24<span class="original">€4.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+</div>
+<button class="buy-button" onclick="closeModal('ranksModal')">Close</button>
+</div>
+
+<!-- Crates Modal -->
+<div id="cratesModal" class="modal">
+<h2>🎁 Crates (15% Off)</h2>
+<div class="items-grid">
+<div class="item crate-epic"><h3>Epic</h3><p>Average diamond gear</p><p class="price">€0.16<span class="original">€0.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item crate-elite"><h3>Elite</h3><p>Good diamond gear</p><p class="price">€0.33<span class="original">€0.39</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item crate-ultra"><h3>Ultra</h3><p>Netherite gear + bow/trident/spear</p><p class="price">€0.84<span class="original">€0.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item crate-cherry"><h3>Cherry</h3><p>Max netherite gear + max maces</p><p class="price">€1.27<span class="original">€1.49</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+</div>
+<button class="buy-button" onclick="closeModal('cratesModal')">Close</button>
+</div>
+
+<!-- Cherries Modal -->
+<div id="creditsModal" class="modal">
+<h2>💎 Cherries (15% Off)</h2>
+<div class="items-grid">
+<div class="item"><h3>100</h3><p>Small boost</p><p class="price">€0.43<span class="original">€0.50</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item"><h3>250</h3><p>Medium boost</p><p class="price">€0.93<span class="original">€1.09</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item"><h3>500</h3><p>Large boost</p><p class="price">€1.86<span class="original">€2.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item"><h3>1000</h3><p>Ultimate pack</p><p class="price">€3.65<span class="original">€4.29</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+</div>
+<button class="buy-button" onclick="closeModal('creditsModal')">Close</button>
+</div>
+
+<!-- Cherry Clicker Modal -->
+<div id="clickerModal" class="modal">
+<h2>🍒 Cherry Clicker</h2>
+<p>Click the cherry to earn cherries! 1 second cooldown.</p>
+<div id="clicker-display" style="text-align:center;font-size:50px;margin-top:20px;">🍒 0</div>
+<button class="buy-button" onclick="closeModal('clickerModal')">Close</button>
+</div>
+
+<!-- Buy Modal -->
+<div id="buyModal" class="modal">
+<h2>Purchase Info</h2>
+<p>Make a ticket on Discord for purchase!</p>
+<p><a href="https://discord.gg/QF5kKrX8" target="_blank" style="color:#ff79aa;">Join Discord</a></p>
+<button class="buy-button" onclick="closeModal('buyModal')">Close</button>
+</div>
 
 <footer>© 2026 CherrySMP • Not affiliated with Mojang</footer>
 
@@ -129,45 +177,16 @@ function updateCherryDisplay(){
 }
 updateCherryDisplay();
 
-function createCherryParticles(x,y){
-  for(let i=0;i<10;i++){
-    const p=document.createElement('span');
-    p.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-    p.classList.add('sparkle');
-    p.style.left=x+'px';
-    p.style.top=y+'px';
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(),800);
-  }
-}
-
-cherryCounter.onclick=function(e){
+cherryCounter.onclick=function(){
   if(clickCooldown) return;
   cherryClicks++;
   localStorage.setItem('cherryClicks',cherryClicks);
   updateCherryDisplay();
   cherryCounter.style.transform='scale(1.5)';
   document.getElementById('click-sound').play();
-  createCherryParticles(e.clientX,e.clientY);
   clickCooldown=true;
   setTimeout(()=>{cherryCounter.style.transform='scale(1)'; clickCooldown=false;},1000);
 };
-
-// Buy button sparkle effect
-document.querySelectorAll('.buy-button').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-    const rect=btn.getBoundingClientRect();
-    for(let i=0;i<5;i++){
-      const s=document.createElement('span');
-      s.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-      s.classList.add('sparkle');
-      s.style.left=rect.left + rect.width/2 + Math.random()*30 -15 +'px';
-      s.style.top=rect.top + rect.height/2 + Math.random()*30 -15 +'px';
-      document.body.appendChild(s);
-      setTimeout(()=>s.remove(),800);
-    }
-  });
-});
 
 // Modal logic
 function openModal(id){
