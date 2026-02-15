@@ -8,6 +8,7 @@
 <style>
 * {box-sizing:border-box;margin:0;padding:0;}
 body {font-family:'Roboto',sans-serif;background:#2a0b1c;color:#fff;overflow-x:hidden;position:relative;}
+
 /* Emoji background */
 @keyframes floatUp {0%{transform:translateY(100vh) rotate(0deg); opacity:1;}100%{transform:translateY(-10vh) rotate(360deg); opacity:0;}}
 .emoji {position:absolute;font-size:24px;animation:floatUp linear infinite;pointer-events:none;}
@@ -22,18 +23,15 @@ nav a:hover {color:#ff2d55;}
 .hero {text-align:center;padding:120px 20px 80px;position:relative;overflow:hidden;background:linear-gradient(135deg,#ff2d55,#ff4f6d);border-bottom:5px solid #ff79aa;}
 .hero img {width:150px;margin-bottom:20px;border-radius:12px;}
 .hero h1 {font-size:60px;margin-bottom:10px;animation:fadeInUp 1s ease forwards;}
-.hero p.sub {font-size:20px;color:#ffb3d9;margin-bottom:40px;animation:fadeInUp 1.2s ease forwards;} /* pinker */
+.hero p.sub {font-size:20px;color:#ffb3d9;margin-bottom:40px;animation:fadeInUp 1.2s ease forwards;}
 .button {background:linear-gradient(45deg,#ff79aa,#ff2d55);padding:16px 32px;border-radius:12px;text-decoration:none;color:white;font-weight:bold;display:inline-block;transition:0.4s;animation:fadeInUp 1.4s ease forwards;}
 .button:hover {transform:scale(1.05);background:linear-gradient(45deg,#ff2d55,#ff79aa);}
 
 /* Categories */
-.categories {display:flex; justify-content:center; gap:30px; padding:60px 20px; flex-wrap:wrap; position:relative;}
+.categories {display:flex; justify-content:center; gap:50px; padding:60px 20px; flex-wrap:wrap; position:relative;}
 
 /* Triangle layout for ranks */
-.rank-triangle {display:grid; grid-template-areas:"top" "middle" "bottom"; justify-items:center; align-items:center;}
-.rank-triangle .item:nth-child(1) {grid-area:top;}
-.rank-triangle .item:nth-child(2) {grid-area:middle;}
-.rank-triangle .item:nth-child(3) {grid-area:bottom;}
+.rank-triangle {display:grid; grid-template-areas:"top" "middle" "bottom"; justify-items:center; align-items:center; row-gap:40px;}
 
 /* Cards */
 .card {background:#1c1c2e;padding:30px 20px;width:280px;border-radius:16px;text-align:center;transition:0.4s;cursor:pointer;position:relative;overflow:hidden;}
@@ -62,13 +60,8 @@ footer {background:#111118;padding:25px;text-align:center;color:#777;font-size:1
 .buy-button {background:#ff4f6d;color:white;border:none;padding:8px 12px;border-radius:8px;margin-top:8px;cursor:pointer;transition:0.3s;}
 .buy-button:hover {background:#ff79aa;}
 
-/* Clickable heart counter */
-#heart-counter {position:fixed;top:80px;right:20px;font-size:18px;color:#ff79aa; cursor:pointer; user-select:none;}
-
-/* Animations */
-@keyframes fadeInUp {0%{opacity:0;transform:translateY(30px);}100%{opacity:1;transform:translateY(0);}}
-@keyframes slideIn {0%{opacity:0;transform:translateY(-50px);}100%{opacity:1;transform:translateY(0);}}
-@keyframes pop {0%{transform:scale(1);}50%{transform:scale(1.5);}100%{transform:scale(1);}}
+/* Cherry click counter */
+#cherry-counter {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:60px;color:#ff2d55;cursor:pointer; user-select:none; z-index:300; transition: transform 0.2s;}
 </style>
 </head>
 <body>
@@ -106,10 +99,10 @@ footer {background:#111118;padding:25px;text-align:center;color:#777;font-size:1
   </div>
 </div>
 
-<!-- Clickable hearts -->
-<div id="heart-counter">❤️ 0</div>
+<!-- Big clickable cherry in middle -->
+<div id="cherry-counter">🍒 0</div>
 
-<!-- Ranks Modal (triangle layout) -->
+<!-- Ranks Modal -->
 <div id="ranksModal" class="modal">
 <div class="modal-content">
 <span class="close" onclick="closeModal('ranksModal')">&times;</span>
@@ -118,21 +111,21 @@ footer {background:#111118;padding:25px;text-align:center;color:#777;font-size:1
   <div class="item">
     <img src="placeholder.png">
     <h3>Ultra</h3>
-    <p>3 homes<br>10 auction sells<br>5 orders<br>Own kit every 7 days<br>/workbench</p>
+    <p>3 homes<br>10 auction sells<br>5 orders<br>Own kit every 7 days<br>/workbench<br>AFK +1 cherry every 50s</p>
     <p class="price">€2.12<span class="original">€2.49</span></p>
     <button class="buy-button" onclick="openBuyModal()">Buy</button>
   </div>
   <div class="item">
     <img src="placeholder.png">
     <h3>Cherry+</h3>
-    <p>Same perks as Cherry<br>5 homes<br>20 auction sells<br>7 orders<br>Own kit every 7 days<br>/loom</p>
+    <p>Same perks as Cherry<br>5 homes<br>20 auction sells<br>7 orders<br>Own kit every 7 days<br>/loom<br>AFK +1 cherry every 30s</p>
     <p class="price">€7.64<span class="original">€8.99</span></p>
     <button class="buy-button" onclick="openBuyModal()">Buy</button>
   </div>
   <div class="item">
     <img src="placeholder.png">
     <h3>Cherry</h3>
-    <p>Same perks as Ultra<br>4 homes<br>15 auction sells<br>7 orders<br>Own kit every 7 days<br>/anvil /grindstone /smithing table</p>
+    <p>Same perks as Ultra<br>4 homes<br>15 auction sells<br>7 orders<br>Own kit every 7 days<br>/anvil /grindstone /smithing table<br>AFK +1 cherry every 40s</p>
     <p class="price">€4.24<span class="original">€4.99</span></p>
     <button class="buy-button" onclick="openBuyModal()">Buy</button>
   </div>
@@ -192,14 +185,14 @@ window.onclick=function(event){document.querySelectorAll('.modal').forEach(modal
 const emojis=['❤️','🍒','💖','💕','❣️'];
 for(let i=0;i<50;i++){const span=document.createElement('span');span.classList.add('emoji');span.style.left=Math.random()*100+'vw';span.style.fontSize=(12+Math.random()*20)+'px';span.style.animationDuration=(5+Math.random()*5)+'s';span.innerText=emojis[Math.floor(Math.random()*emojis.length)];document.getElementById('emoji-container').appendChild(span);}
 
-// Heart click counter
-const heartCounter=document.getElementById('heart-counter');
-let clicks=parseInt(localStorage.getItem('heartClicks'))||0;
-heartCounter.innerText=`❤️ ${clicks}`;
-heartCounter.onclick=function(){
-  clicks++; localStorage.setItem('heartClicks',clicks);
-  heartCounter.innerText=`❤️ ${clicks}`;
-  heartCounter.style.transform='scale(1.5)'; setTimeout(()=>{heartCounter.style.transform='scale(1)';},200);
+// Cherry click counter
+const cherryCounter=document.getElementById('cherry-counter');
+let clicks=parseInt(localStorage.getItem('cherryClicks'))||0;
+cherryCounter.innerText=`🍒 ${clicks}`;
+cherryCounter.onclick=function(){
+  clicks++; localStorage.setItem('cherryClicks',clicks);
+  cherryCounter.innerText=`🍒 ${clicks}`;
+  cherryCounter.style.transform='scale(1.5)'; setTimeout(()=>{cherryCounter.style.transform='scale(1)';},200);
 };
 </script>
 
