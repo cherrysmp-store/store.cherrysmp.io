@@ -41,15 +41,15 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 /* Pop-up Modals */
 .modal{display:none;position:fixed;z-index:200;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.8);width:90%;max-width:600px;background:#1c1c2e;padding:20px;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.7);opacity:0;pointer-events:none;transition:0.4s;}
 .modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
-.modal h2{text-align:center;margin-top:0;}
+.modal h2{text-align:center;margin-top:0;font-weight:bold;color:#000;}
 .items-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
 .item{background:#222232;border-radius:12px;padding:12px;text-align:center;transition:0.3s;position:relative;cursor:pointer;}
 .item:hover{background:#33334a;}
-.item h3{margin:5px 0;font-size:16px;}
-.item p{font-size:14px;color:#ccc;margin:3px 0;}
-.item .price{font-weight:bold;font-size:16px;margin-top:5px;}
-.item .original{text-decoration:line-through;color:#aaa;margin-left:5px;}
-.buy-button{padding:6px 10px;border-radius:8px;border:none;margin-top:6px;color:white;cursor:pointer;transition:0.3s;}
+.item h3{margin:5px 0;font-size:16px;font-weight:bold;color:#000;}
+.item p{font-size:14px;color:#000;margin:3px 0;font-weight:bold;}
+.item .price{font-weight:bold;font-size:16px;margin-top:5px;background:linear-gradient(90deg,#000,#333);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.item .original{text-decoration:line-through;color:#555;margin-left:5px;font-weight:bold;}
+.buy-button{padding:6px 10px;border-radius:8px;border:none;margin-top:6px;color:white;cursor:pointer;transition:0.3s;font-weight:bold;}
 .buy-button:hover{opacity:0.8;}
 
 /* Colors */
@@ -61,8 +61,8 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 .crate-ultra{background:orange;}
 .crate-cherry{background:red;}
 
-/* Cherry Clicker */
-#cherry-counter{position:fixed;top:50%;left:65%;transform:translate(-50%,-50%);font-size:80px;color:#ff2d55;cursor:pointer;user-select:none;z-index:300;transition:transform 0.2s;}
+/* Cherry Clicker inside modal only */
+#cherry-counter{display:none;}
 </style>
 </head>
 <body>
@@ -96,9 +96,6 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 <div class="card" onclick="openModal('creditsModal')"><h3>💎 Cherries</h3><p>Buy in-game credits instantly.</p></div>
 <div class="card" onclick="openModal('clickerModal')"><h3>🍒 Cherry Clicker</h3><p>Click to earn cherries!</p></div>
 </div>
-
-<!-- Cherry clicker main -->
-<div id="cherry-counter">🍒 0</div>
 
 <!-- Ranks Modal -->
 <div id="ranksModal" class="modal">
@@ -139,7 +136,7 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 <div id="clickerModal" class="modal">
 <h2>🍒 Cherry Clicker</h2>
 <p>Click the cherry to earn cherries! 1 second cooldown.</p>
-<div id="clicker-display" style="text-align:center;font-size:50px;margin-top:20px;">🍒 0</div>
+<div id="clicker-display" style="text-align:center;font-size:80px;margin-top:20px;cursor:pointer;">🍒 0</div>
 <button class="buy-button" onclick="closeModal('clickerModal')">Close</button>
 </div>
 
@@ -166,26 +163,23 @@ for(let i=0;i<50;i++){
   document.getElementById('emoji-container').appendChild(span);
 }
 
-// Cherry clicker
+// Cherry clicker inside modal
 let cherryClicks=parseInt(localStorage.getItem('cherryClicks'))||0;
 let clickCooldown=false;
-const cherryCounter=document.getElementById('cherry-counter');
 const clickerDisplay=document.getElementById('clicker-display');
+
 function updateCherryDisplay(){
-  cherryCounter.innerText=`🍒 ${cherryClicks}`;
   if(clickerDisplay) clickerDisplay.innerText=`🍒 ${cherryClicks}`;
 }
 updateCherryDisplay();
 
-cherryCounter.onclick=function(){
+clickerDisplay.onclick=function(){
   if(clickCooldown) return;
   cherryClicks++;
   localStorage.setItem('cherryClicks',cherryClicks);
   updateCherryDisplay();
-  cherryCounter.style.transform='scale(1.5)';
-  document.getElementById('click-sound').play();
   clickCooldown=true;
-  setTimeout(()=>{cherryCounter.style.transform='scale(1)'; clickCooldown=false;},1000);
+  setTimeout(()=>{clickCooldown=false;},1000);
 };
 
 // Modal logic
@@ -193,13 +187,11 @@ function openModal(id){
   const modal=document.getElementById(id);
   modal.style.display='block';
   setTimeout(()=>modal.classList.add('show'),10);
-  cherryCounter.style.display='none';
 }
 function closeModal(id){
   const modal=document.getElementById(id);
   modal.classList.remove('show');
   setTimeout(()=>modal.style.display='none',400);
-  cherryCounter.style.display='block';
 }
 function openBuyModal(){openModal('buyModal');}
 
