@@ -6,83 +6,89 @@
 <title>CherrySMP Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-* { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:'Roboto',sans-serif; background:#2a0b1c; color:#fff; overflow-x:hidden; position:relative; }
-
-/* Background hearts and cherries */
-@keyframes floatUp {0% {transform:translateY(100vh) rotate(0deg); opacity:1;} 100% {transform:translateY(-10vh) rotate(360deg); opacity:0;}}
-.emoji { position:absolute; font-size:24px; animation: floatUp linear infinite; pointer-events:none; }
+* {box-sizing:border-box;margin:0;padding:0;}
+body {font-family:'Roboto',sans-serif;background:#2a0b1c;color:#fff;overflow-x:hidden;position:relative;}
+/* Emoji background */
+@keyframes floatUp {0%{transform:translateY(100vh) rotate(0deg); opacity:1;}100%{transform:translateY(-10vh) rotate(360deg); opacity:0;}}
+.emoji {position:absolute;font-size:24px;animation:floatUp linear infinite;pointer-events:none;}
 
 /* Navigation */
-nav { background:#111118; padding:15px 40px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; }
-nav h2 { color:#ff2d55; font-size:28px; }
-nav a { color:#aaa; text-decoration:none; margin-left:20px; font-weight:500; transition:0.3s; }
-nav a:hover { color:#ff2d55; }
+nav {background:#111118;padding:15px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+nav h2 {color:#ff2d55;font-size:28px;}
+nav a {color:#aaa;text-decoration:none;margin-left:20px;font-weight:500;transition:0.3s;}
+nav a:hover {color:#ff2d55;}
 
 /* Hero */
-.hero { text-align:center; padding:120px 20px 80px; position:relative; overflow:hidden; background:linear-gradient(135deg,#ff2d55,#ff4f6d); border-bottom:5px solid #ff79aa; }
-.hero img { width:150px; margin-bottom:20px; border-radius:12px; }
-.hero h1 { font-size:60px; margin-bottom:10px; animation:fadeInUp 1s ease forwards; }
-.hero p.sub { font-size:20px; color:#fff3; margin-bottom:40px; animation:fadeInUp 1.2s ease forwards; }
-.button { background:linear-gradient(45deg,#ff79aa,#ff2d55); padding:16px 32px; border-radius:12px; text-decoration:none; color:white; font-weight:bold; display:inline-block; transition:0.4s; animation:fadeInUp 1.4s ease forwards; }
-.button:hover { transform:scale(1.05); background:linear-gradient(45deg,#ff2d55,#ff79aa); }
+.hero {text-align:center;padding:120px 20px 80px;position:relative;overflow:hidden;background:linear-gradient(135deg,#ff2d55,#ff4f6d);border-bottom:5px solid #ff79aa;}
+.hero img {width:150px;margin-bottom:20px;border-radius:12px;}
+.hero h1 {font-size:60px;margin-bottom:10px;animation:fadeInUp 1s ease forwards;}
+.hero p.sub {font-size:20px;color:#ffb3d9;margin-bottom:40px;animation:fadeInUp 1.2s ease forwards;} /* pinker */
+.button {background:linear-gradient(45deg,#ff79aa,#ff2d55);padding:16px 32px;border-radius:12px;text-decoration:none;color:white;font-weight:bold;display:inline-block;transition:0.4s;animation:fadeInUp 1.4s ease forwards;}
+.button:hover {transform:scale(1.05);background:linear-gradient(45deg,#ff2d55,#ff79aa);}
 
 /* Categories */
-.categories { display:flex; justify-content:center; gap:30px; padding:60px 20px; flex-wrap:wrap; }
-.card { background:#1c1c2e; padding:30px 20px; width:280px; border-radius:16px; text-align:center; transition:0.4s; cursor:pointer; position:relative; overflow:hidden; }
-.card::before { content:''; position:absolute; width:120%; height:120%; background:linear-gradient(60deg, rgba(255,45,85,0.2), rgba(255,79,109,0.2)); top:-10%; left:-10%; transform:rotate(45deg); transition:0.5s; }
-.card:hover::before { transform:rotate(0deg); }
-.card:hover { transform:translateY(-10px); background:#222232; }
-.card h3 { margin-top:10px; font-size:22px; color:#ff2d55; }
-.card p { color:#ccc; font-size:15px; margin:15px 0 25px; }
+.categories {display:flex; justify-content:center; gap:30px; padding:60px 20px; flex-wrap:wrap; position:relative;}
+
+/* Triangle layout for ranks */
+.rank-triangle {display:grid; grid-template-areas:"top" "middle" "bottom"; justify-items:center; align-items:center;}
+.rank-triangle .item:nth-child(1) {grid-area:top;}
+.rank-triangle .item:nth-child(2) {grid-area:middle;}
+.rank-triangle .item:nth-child(3) {grid-area:bottom;}
+
+/* Cards */
+.card {background:#1c1c2e;padding:30px 20px;width:280px;border-radius:16px;text-align:center;transition:0.4s;cursor:pointer;position:relative;overflow:hidden;}
+.card::before {content:'';position:absolute;width:120%;height:120%;background:linear-gradient(60deg, rgba(255,45,85,0.2), rgba(255,79,109,0.2));top:-10%;left:-10%;transform:rotate(45deg);transition:0.5s;}
+.card:hover::before {transform:rotate(0deg);}
+.card:hover {transform:translateY(-10px);background:#222232;}
+.card h3 {margin-top:10px;font-size:22px;color:#ff2d55;}
+.card p {color:#ccc;font-size:15px;margin:15px 0 25px;}
 
 /* Footer */
-footer { background:#111118; padding:25px; text-align:center; color:#777; font-size:14px; }
+footer {background:#111118;padding:25px;text-align:center;color:#777;font-size:14px;}
 
 /* Modals */
-.modal { display:none; position:fixed; z-index:200; left:0; top:0; width:100%; height:100%; overflow-y:auto; background-color:rgba(0,0,0,0.85); backdrop-filter:blur(4px); }
-.modal-content { background:#1c1c2e; margin:5% auto; padding:30px 20px; border-radius:16px; width:90%; max-width:800px; position:relative; animation:slideIn 0.5s ease forwards; }
-.close { color:#ff2d55; position:absolute; top:20px; right:25px; font-size:28px; font-weight:bold; cursor:pointer; }
-.modal-content h2 { margin-top:0; color:#ff2d55; text-align:center; }
-.items-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px; }
-.item { background:#222232; border-radius:12px; padding:15px; text-align:center; transition:0.3s; position:relative; }
-.item:hover { background:#33334a; }
-.item img { width:80px; margin-bottom:10px; border-radius:8px; }
-.item h3 { margin:5px 0; color:#ff2d55; font-size:18px; }
-.item p { font-size:14px; color:#ccc; margin:3px 0; }
-.item .price { color:#ff2d55; font-weight:bold; font-size:16px; margin-top:5px; }
-.item .original { text-decoration: line-through; color:#aaa; font-size:14px; margin-left:5px; }
-.buy-button { background:#ff4f6d; color:white; border:none; padding:8px 12px; border-radius:8px; margin-top:8px; cursor:pointer; transition:0.3s; }
-.buy-button:hover { background:#ff79aa; }
+.modal {display:none;position:fixed;z-index:200;left:0;top:0;width:100%;height:100%;overflow-y:auto;background-color:rgba(0,0,0,0.85);backdrop-filter:blur(4px);}
+.modal-content {background:#1c1c2e;margin:5% auto;padding:30px 20px;border-radius:16px;width:90%;max-width:800px;position:relative;animation:slideIn 0.5s ease forwards;}
+.close {color:#ff2d55;position:absolute;top:20px;right:25px;font-size:28px;font-weight:bold;cursor:pointer;}
+.modal-content h2 {margin-top:0;color:#ff2d55;text-align:center;}
+.items-grid {display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
+.item {background:#222232;border-radius:12px;padding:15px;text-align:center;transition:0.3s;position:relative;}
+.item:hover {background:#33334a;}
+.item img {width:80px;margin-bottom:10px;border-radius:8px;}
+.item h3 {margin:5px 0;color:#ff2d55;font-size:18px;}
+.item p {font-size:14px;color:#ccc;margin:3px 0;}
+.item .price {color:#ff2d55;font-weight:bold;font-size:16px;margin-top:5px;}
+.item .original {text-decoration: line-through;color:#aaa;font-size:14px;margin-left:5px;}
+.buy-button {background:#ff4f6d;color:white;border:none;padding:8px 12px;border-radius:8px;margin-top:8px;cursor:pointer;transition:0.3s;}
+.buy-button:hover {background:#ff79aa;}
 
-/* Buy Modal */
-#buyModal .modal-content { max-width:500px; text-align:center; }
+/* Clickable heart counter */
+#heart-counter {position:fixed;top:80px;right:20px;font-size:18px;color:#ff79aa; cursor:pointer; user-select:none;}
 
 /* Animations */
-@keyframes fadeInUp {0%{opacity:0; transform:translateY(30px);}100%{opacity:1; transform:translateY(0);}}
-@keyframes slideIn {0%{opacity:0; transform:translateY(-50px);}100%{opacity:1; transform:translateY(0);}}
+@keyframes fadeInUp {0%{opacity:0;transform:translateY(30px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes slideIn {0%{opacity:0;transform:translateY(-50px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes pop {0%{transform:scale(1);}50%{transform:scale(1.5);}100%{transform:scale(1);}}
 </style>
 </head>
 <body>
 
-<!-- Falling hearts and cherries -->
 <div id="emoji-container"></div>
 
 <nav>
-  <h2>CherrySMP</h2>
-  <div>
-    <a href="#">Home</a>
-    <a href="#">Ranks</a>
-    <a href="#" onclick="openModal('cratesModal')">Crates</a>
-    <a href="#">Cherries</a>
-  </div>
+<h2>CherrySMP</h2>
+<div>
+<a href="#" onclick="openModal('ranksModal')">Ranks</a>
+<a href="#" onclick="openModal('cratesModal')">Crates</a>
+<a href="#" onclick="openModal('creditsModal')">Cherries</a>
+</div>
 </nav>
 
 <div class="hero">
-  <img src="logo.png" alt="CherrySMP Logo">
-  <h1>CherrySMP Store</h1>
-  <p class="sub">Valentine's deals 14.2-21.2 | 15% off everything!</p>
-  <a class="button" href="#">Browse Store</a>
+<img src="logo.png" alt="CherrySMP Logo">
+<h1>CherrySMP Store</h1>
+<p class="sub">Valentine's deals 14.2-21.2 | 15% off everything!</p>
+<a class="button" href="#">Browse Store</a>
 </div>
 
 <div class="categories">
@@ -100,101 +106,102 @@ footer { background:#111118; padding:25px; text-align:center; color:#777; font-s
   </div>
 </div>
 
-<!-- Ranks Modal -->
+<!-- Clickable hearts -->
+<div id="heart-counter">❤️ 0</div>
+
+<!-- Ranks Modal (triangle layout) -->
 <div id="ranksModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('ranksModal')">&times;</span>
-    <h2>🏆 Ranks (Valentine's 15% Off)</h2>
-    <div class="items-grid">
-      <div class="item">
-        <img src="placeholder.png">
-        <h3>Ultra</h3>
-        <p>3 homes<br>10 auction sells<br>5 orders<br>Own kit every 7 days<br>/workbench = crafting table everywhere</p>
-        <p class="price">€2.12<span class="original">€2.49</span></p>
-        <button class="buy-button" onclick="openBuyModal()">Buy</button>
-      </div>
-      <div class="item">
-        <img src="placeholder.png">
-        <h3>Cherry</h3>
-        <p>Same perks as Ultra<br>4 homes<br>15 auction sells<br>7 orders<br>Own kit every 7 days<br>/anvil /grindstone /smithing table</p>
-        <p class="price">€4.24<span class="original">€4.99</span></p>
-        <button class="buy-button" onclick="openBuyModal()">Buy</button>
-      </div>
-      <div class="item">
-        <img src="placeholder.png">
-        <h3>Cherry+</h3>
-        <p>Same perks as Cherry<br>5 homes<br>20 auction sells<br>7 orders<br>Own kit every 7 days<br>/loom</p>
-        <p class="price">€7.64<span class="original">€8.99</span></p>
-        <button class="buy-button" onclick="openBuyModal()">Buy</button>
-      </div>
-    </div>
+<div class="modal-content">
+<span class="close" onclick="closeModal('ranksModal')">&times;</span>
+<h2>🏆 Ranks (Valentine's 15% Off)</h2>
+<div class="rank-triangle">
+  <div class="item">
+    <img src="placeholder.png">
+    <h3>Ultra</h3>
+    <p>3 homes<br>10 auction sells<br>5 orders<br>Own kit every 7 days<br>/workbench</p>
+    <p class="price">€2.12<span class="original">€2.49</span></p>
+    <button class="buy-button" onclick="openBuyModal()">Buy</button>
   </div>
+  <div class="item">
+    <img src="placeholder.png">
+    <h3>Cherry+</h3>
+    <p>Same perks as Cherry<br>5 homes<br>20 auction sells<br>7 orders<br>Own kit every 7 days<br>/loom</p>
+    <p class="price">€7.64<span class="original">€8.99</span></p>
+    <button class="buy-button" onclick="openBuyModal()">Buy</button>
+  </div>
+  <div class="item">
+    <img src="placeholder.png">
+    <h3>Cherry</h3>
+    <p>Same perks as Ultra<br>4 homes<br>15 auction sells<br>7 orders<br>Own kit every 7 days<br>/anvil /grindstone /smithing table</p>
+    <p class="price">€4.24<span class="original">€4.99</span></p>
+    <button class="buy-button" onclick="openBuyModal()">Buy</button>
+  </div>
+</div>
+</div>
 </div>
 
 <!-- Crates Modal -->
 <div id="cratesModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('cratesModal')">&times;</span>
-    <h2>🎁 Crates (Valentine's 15% Off)</h2>
-    <div class="items-grid">
-      <div class="item"><img src="placeholder.png"><h3>Epic</h3><p>Average diamond gear</p><p class="price">€0.16<span class="original">€0.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-      <div class="item"><img src="placeholder.png"><h3>Elite</h3><p>Good diamond gear</p><p class="price">€0.33<span class="original">€0.39</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-      <div class="item"><img src="placeholder.png"><h3>Ultra</h3><p>Netherite gear + bow/trident/spear</p><p class="price">€0.84<span class="original">€0.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-      <div class="item"><img src="placeholder.png"><h3>Cherry</h3><p>Max out netherite gear + max out maces</p><p class="price">€1.27<span class="original">€1.49</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-    </div>
-  </div>
+<div class="modal-content">
+<span class="close" onclick="closeModal('cratesModal')">&times;</span>
+<h2>🎁 Crates (Valentine's 15% Off)</h2>
+<div class="items-grid">
+  <div class="item"><img src="placeholder.png"><h3>Epic</h3><p>Average diamond gear</p><p class="price">€0.16<span class="original">€0.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+  <div class="item"><img src="placeholder.png"><h3>Elite</h3><p>Good diamond gear</p><p class="price">€0.33<span class="original">€0.39</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+  <div class="item"><img src="placeholder.png"><h3>Ultra</h3><p>Netherite gear + bow/trident/spear</p><p class="price">€0.84<span class="original">€0.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+  <div class="item"><img src="placeholder.png"><h3>Cherry</h3><p>Max netherite gear + max maces</p><p class="price">€1.27<span class="original">€1.49</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+</div>
+</div>
 </div>
 
 <!-- Cherries Modal -->
 <div id="creditsModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('creditsModal')">&times;</span>
-    <h2>💎 Cherries (Valentine's 15% Off)</h2>
-    <div class="items-grid">
-      <div class="item"><img src="placeholder.png"><h3>100</h3><p>Small boost</p><p class="price">€0.43<span class="original">€0.50</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-      <div class="item"><img src="placeholder.png"><h3>250</h3><p>Medium boost</p><p class="price">€0.93<span class="original">€1.09</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-      <div class="item"><img src="placeholder.png"><h3>500</h3><p>Large boost</p><p class="price">€1.86<span class="original">€2.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-      <div class="item"><img src="placeholder.png"><h3>1000</h3><p>Ultimate pack</p><p class="price">€3.65<span class="original">€4.29</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-    </div>
-  </div>
+<div class="modal-content">
+<span class="close" onclick="closeModal('creditsModal')">&times;</span>
+<h2>💎 Cherries (Valentine's 15% Off)</h2>
+<div class="items-grid">
+  <div class="item"><img src="placeholder.png"><h3>100</h3><p>Small boost</p><p class="price">€0.43<span class="original">€0.50</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+  <div class="item"><img src="placeholder.png"><h3>250</h3><p>Medium boost</p><p class="price">€0.93<span class="original">€1.09</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+  <div class="item"><img src="placeholder.png"><h3>500</h3><p>Large boost</p><p class="price">€1.86<span class="original">€2.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+  <div class="item"><img src="placeholder.png"><h3>1000</h3><p>Ultimate pack</p><p class="price">€3.65<span class="original">€4.29</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+</div>
+</div>
 </div>
 
 <!-- Buy Modal -->
 <div id="buyModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('buyModal')">&times;</span>
-    <h2>Purchase Info</h2>
-    <p>Make a ticket on Discord for purchase!</p>
-    <p><a href="https://discord.gg/QF5kKrX8" target="_blank" style="color:#ff79aa;">Join Discord</a></p>
-  </div>
+<div class="modal-content">
+<span class="close" onclick="closeModal('buyModal')">&times;</span>
+<h2>Purchase Info</h2>
+<p>Make a ticket on Discord for purchase!</p>
+<p><a href="https://discord.gg/QF5kKrX8" target="_blank" style="color:#ff79aa;">Join Discord</a></p>
+</div>
 </div>
 
 <footer>© 2026 CherrySMP • Not affiliated with Mojang</footer>
 
 <script>
-function openModal(id){ document.getElementById(id).style.display='block'; }
-function closeModal(id){ document.getElementById(id).style.display='none'; }
+function openModal(id){document.getElementById(id).style.display='block';}
+function closeModal(id){document.getElementById(id).style.display='none';}
+function openBuyModal(){openModal('buyModal');}
 
-function openBuyModal(){ openModal('buyModal'); }
-
-// Close modals on outside click
-window.onclick=function(event){
-  document.querySelectorAll('.modal').forEach(modal=>{
-    if(event.target===modal){ modal.style.display='none'; }
-  });
-}
+// Close modals by clicking outside
+window.onclick=function(event){document.querySelectorAll('.modal').forEach(modal=>{if(event.target===modal){modal.style.display='none';}});}
 
 // Emoji rain
-const emojis = ['❤️','🍒','💖','💕','❣️'];
-for(let i=0;i<50;i++){
-  const span = document.createElement('span');
-  span.classList.add('emoji');
-  span.style.left=Math.random()*100+'vw';
-  span.style.fontSize=(12+Math.random()*20)+'px';
-  span.style.animationDuration=(5+Math.random()*5)+'s';
-  span.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-  document.getElementById('emoji-container').appendChild(span);
-}
+const emojis=['❤️','🍒','💖','💕','❣️'];
+for(let i=0;i<50;i++){const span=document.createElement('span');span.classList.add('emoji');span.style.left=Math.random()*100+'vw';span.style.fontSize=(12+Math.random()*20)+'px';span.style.animationDuration=(5+Math.random()*5)+'s';span.innerText=emojis[Math.floor(Math.random()*emojis.length)];document.getElementById('emoji-container').appendChild(span);}
+
+// Heart click counter
+const heartCounter=document.getElementById('heart-counter');
+let clicks=parseInt(localStorage.getItem('heartClicks'))||0;
+heartCounter.innerText=`❤️ ${clicks}`;
+heartCounter.onclick=function(){
+  clicks++; localStorage.setItem('heartClicks',clicks);
+  heartCounter.innerText=`❤️ ${clicks}`;
+  heartCounter.style.transform='scale(1.5)'; setTimeout(()=>{heartCounter.style.transform='scale(1)';},200);
+};
 </script>
+
 </body>
 </html>
