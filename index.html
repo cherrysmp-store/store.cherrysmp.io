@@ -6,7 +6,7 @@
 <title>CherrySMP Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* Reset & General */
+/* Reset & general */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#ff2d55,#ff79aa);color:#fff;overflow-x:hidden;position:relative;}
 
@@ -39,8 +39,8 @@ nav a:hover{color:#ff2d55;}
 footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14px;}
 
 /* Pop-up Modals */
-.modal{display:none;position:fixed;z-index:200;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.8);width:90%;max-width:600px;background:#1c1c2e;padding:20px;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.7);opacity:0;transition:0.4s;}
-.modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.modal{display:none;position:fixed;z-index:200;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.8);width:90%;max-width:600px;background:#1c1c2e;padding:20px;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.7);opacity:0;pointer-events:none;transition:0.4s;}
+.modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
 .modal h2{text-align:center;margin-top:0;}
 .items-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
 .item{background:#222232;border-radius:12px;padding:12px;text-align:center;transition:0.3s;position:relative;cursor:pointer;}
@@ -97,31 +97,16 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 <div class="card" onclick="openModal('clickerModal')"><h3>🍒 Cherry Clicker</h3><p>Click to earn cherries!</p></div>
 </div>
 
-<!-- Cherry clicker on main screen -->
+<!-- Cherry clicker main -->
 <div id="cherry-counter">🍒 0</div>
 
 <!-- Ranks Modal -->
 <div id="ranksModal" class="modal">
 <h2>🏆 Ranks (15% Off)</h2>
 <div class="items-grid">
-<div class="item rank-ultra">
-<h3>Ultra</h3>
-<p>3 homes<br>10 auction sells<br>5 orders<br>Own kit every 7 days<br>/workbench<br>AFK +1 cherry/50s</p>
-<p class="price">€2.12<span class="original">€2.49</span></p>
-<button class="buy-button" onclick="openBuyModal()">Buy</button>
-</div>
-<div class="item rank-cherryplus">
-<h3>Cherry+</h3>
-<p>5 homes<br>20 auction sells<br>7 orders<br>Own kit every 7 days<br>/loom<br>AFK +1 cherry/30s</p>
-<p class="price">€7.64<span class="original">€8.99</span></p>
-<button class="buy-button" onclick="openBuyModal()">Buy</button>
-</div>
-<div class="item rank-cherry">
-<h3>Cherry</h3>
-<p>4 homes<br>15 auction sells<br>7 orders<br>Own kit every 7 days<br>/anvil /grindstone /smithing table<br>AFK +1 cherry/40s</p>
-<p class="price">€4.24<span class="original">€4.99</span></p>
-<button class="buy-button" onclick="openBuyModal()">Buy</button>
-</div>
+<div class="item rank-ultra"><h3>Ultra</h3><p>3 homes<br>10 auction sells<br>5 orders<br>Own kit every 7 days<br>/workbench<br>AFK +1 cherry/50s</p><p class="price">€2.12<span class="original">€2.49</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item rank-cherryplus"><h3>Cherry+</h3><p>5 homes<br>20 auction sells<br>7 orders<br>Own kit every 7 days<br>/loom<br>AFK +1 cherry/30s</p><p class="price">€7.64<span class="original">€8.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item rank-cherry"><h3>Cherry</h3><p>4 homes<br>15 auction sells<br>7 orders<br>Own kit every 7 days<br>/anvil /grindstone /smithing table<br>AFK +1 cherry/40s</p><p class="price">€4.24<span class="original">€4.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
 </div>
 <button class="buy-button" onclick="closeModal('ranksModal')">Close</button>
 </div>
@@ -181,7 +166,7 @@ for(let i=0;i<50;i++){
   document.getElementById('emoji-container').appendChild(span);
 }
 
-// Cherry clicker main
+// Cherry clicker
 let cherryClicks=parseInt(localStorage.getItem('cherryClicks'))||0;
 let clickCooldown=false;
 const cherryCounter=document.getElementById('cherry-counter');
@@ -203,13 +188,17 @@ cherryCounter.onclick=function(){
   setTimeout(()=>{cherryCounter.style.transform='scale(1)'; clickCooldown=false;},1000);
 };
 
-// Pop-up modals
+// Modal logic
 function openModal(id){
-  document.getElementById(id).classList.add('show');
+  const modal=document.getElementById(id);
+  modal.style.display='block';
+  setTimeout(()=>modal.classList.add('show'),10);
   cherryCounter.style.display='none';
 }
 function closeModal(id){
-  document.getElementById(id).classList.remove('show');
+  const modal=document.getElementById(id);
+  modal.classList.remove('show');
+  setTimeout(()=>modal.style.display='none',400);
   cherryCounter.style.display='block';
 }
 function openBuyModal(){openModal('buyModal');}
