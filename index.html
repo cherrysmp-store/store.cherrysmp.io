@@ -6,7 +6,6 @@
 <title>CherrySMP Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* Reset & general */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#ff2d55,#ff79aa);color:#fff;overflow-x:hidden;position:relative;}
 
@@ -31,7 +30,7 @@ nav a:hover{color:#ff2d55;}
 /* Categories */
 .categories{display:flex; justify-content:center; gap:50px; padding:60px 20px; flex-wrap:wrap; position:relative;}
 .card{background:#1c1c2e;padding:30px 20px;width:280px;border-radius:16px;text-align:center;transition:0.4s;cursor:pointer;position:relative;overflow:hidden;}
-.card:hover{transform:translateY(-10px);background:#222232;}
+.card:hover{transform:translateY(-10px) scale(1.05);background:#222232;}
 .card h3{margin-top:10px;font-size:22px;}
 .card p{color:#ccc;font-size:15px;margin:15px 0 25px;}
 
@@ -39,18 +38,18 @@ nav a:hover{color:#ff2d55;}
 footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14px;}
 
 /* Pop-up Modals */
-.modal{display:none;position:fixed;z-index:200;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.8);width:90%;max-width:600px;background:#1c1c2e;padding:20px;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.7);opacity:0;pointer-events:none;transition:0.4s;}
+.modal{display:none;position:fixed;z-index:200;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.8);width:90%;max-width:600px;background:#fff6f6;padding:20px;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.7);opacity:0;pointer-events:none;transition:0.4s;}
 .modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
 .modal h2{text-align:center;margin-top:0;font-weight:bold;color:#000;}
 .items-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
-.item{background:#222232;border-radius:12px;padding:12px;text-align:center;transition:0.3s;position:relative;cursor:pointer;}
-.item:hover{background:#33334a;}
+.item{background:#ffe6f0;border-radius:12px;padding:12px;text-align:center;transition:0.3s;position:relative;cursor:pointer;}
+.item:hover{background:#ffc0d9;transform:scale(1.03);}
 .item h3{margin:5px 0;font-size:16px;font-weight:bold;color:#000;}
 .item p{font-size:14px;color:#000;margin:3px 0;font-weight:bold;}
-.item .price{font-weight:bold;font-size:16px;margin-top:5px;background:linear-gradient(90deg,#000,#333);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.item .price{font-weight:bold;font-size:16px;background:linear-gradient(90deg,#ff0000,#000);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .item .original{text-decoration:line-through;color:#555;margin-left:5px;font-weight:bold;}
-.buy-button{padding:6px 10px;border-radius:8px;border:none;margin-top:6px;color:white;cursor:pointer;transition:0.3s;font-weight:bold;}
-.buy-button:hover{opacity:0.8;}
+.buy-button{padding:6px 10px;border-radius:8px;border:none;margin-top:6px;color:white;cursor:pointer;transition:0.3s;font-weight:bold;background:#ff2d55;}
+.buy-button:hover{opacity:0.8;transform:scale(1.1);}
 
 /* Colors */
 .rank-ultra{background:orange;}
@@ -60,9 +59,11 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 .crate-elite{background:gray;}
 .crate-ultra{background:orange;}
 .crate-cherry{background:red;}
+.cherry-item{background:linear-gradient(90deg,#ff0000,#000);}
 
 /* Cherry Clicker inside modal only */
 #cherry-counter{display:none;}
+#clicker-display{cursor:pointer;transition:transform 0.2s;}
 </style>
 </head>
 <body>
@@ -124,10 +125,10 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 <div id="creditsModal" class="modal">
 <h2>💎 Cherries (15% Off)</h2>
 <div class="items-grid">
-<div class="item"><h3>100</h3><p>Small boost</p><p class="price">€0.43<span class="original">€0.50</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item"><h3>250</h3><p>Medium boost</p><p class="price">€0.93<span class="original">€1.09</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item"><h3>500</h3><p>Large boost</p><p class="price">€1.86<span class="original">€2.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item"><h3>1000</h3><p>Ultimate pack</p><p class="price">€3.65<span class="original">€4.29</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item cherry-item"><h3>100</h3><p>Small boost</p><p class="price">€0.43<span class="original">€0.50</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item cherry-item"><h3>250</h3><p>Medium boost</p><p class="price">€0.93<span class="original">€1.09</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item cherry-item"><h3>500</h3><p>Large boost</p><p class="price">€1.86<span class="original">€2.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<div class="item cherry-item"><h3>1000</h3><p>Ultimate pack</p><p class="price">€3.65<span class="original">€4.29</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
 </div>
 <button class="buy-button" onclick="closeModal('creditsModal')">Close</button>
 </div>
@@ -136,7 +137,7 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 <div id="clickerModal" class="modal">
 <h2>🍒 Cherry Clicker</h2>
 <p>Click the cherry to earn cherries! 1 second cooldown.</p>
-<div id="clicker-display" style="text-align:center;font-size:80px;margin-top:20px;cursor:pointer;">🍒 0</div>
+<div id="clicker-display" style="text-align:center;font-size:80px;margin-top:20px;">🍒 0</div>
 <button class="buy-button" onclick="closeModal('clickerModal')">Close</button>
 </div>
 
@@ -153,12 +154,12 @@ footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14
 <script>
 // Emoji rain
 const emojis=['❤️','🍒','💖','💕','❣️'];
-for(let i=0;i<50;i++){
+for(let i=0;i<70;i++){
   const span=document.createElement('span');
   span.classList.add('emoji');
   span.style.left=Math.random()*100+'vw';
-  span.style.fontSize=(12+Math.random()*20)+'px';
-  span.style.animationDuration=(5+Math.random()*5)+'s';
+  span.style.fontSize=(12+Math.random()*25)+'px';
+  span.style.animationDuration=(4+Math.random()*4)+'s';
   span.innerText=emojis[Math.floor(Math.random()*emojis.length)];
   document.getElementById('emoji-container').appendChild(span);
 }
@@ -167,19 +168,16 @@ for(let i=0;i<50;i++){
 let cherryClicks=parseInt(localStorage.getItem('cherryClicks'))||0;
 let clickCooldown=false;
 const clickerDisplay=document.getElementById('clicker-display');
-
-function updateCherryDisplay(){
-  if(clickerDisplay) clickerDisplay.innerText=`🍒 ${cherryClicks}`;
-}
+function updateCherryDisplay(){clickerDisplay.innerText=`🍒 ${cherryClicks}`;}
 updateCherryDisplay();
-
 clickerDisplay.onclick=function(){
   if(clickCooldown) return;
   cherryClicks++;
   localStorage.setItem('cherryClicks',cherryClicks);
   updateCherryDisplay();
   clickCooldown=true;
-  setTimeout(()=>{clickCooldown=false;},1000);
+  clickerDisplay.style.transform='scale(1.4)';
+  setTimeout(()=>{clickCooldown=false;clickerDisplay.style.transform='scale(1)';},1000);
 };
 
 // Modal logic
