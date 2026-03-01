@@ -4,204 +4,319 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CherrySMP Store</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#ff2d55,#ff79aa);color:#fff;overflow-x:hidden;position:relative;}
+:root{
+  --primary:#ff2d6f;
+  --secondary:#ff7eb3;
+  --dark:#0f0f14;
+  --glass:rgba(255,255,255,0.08);
+}
 
-/* Emoji Rain */
-@keyframes floatUp{0%{transform:translateY(100vh) rotate(0deg);opacity:1;}100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}}
-.emoji{position:absolute;font-size:24px;animation:floatUp linear infinite;pointer-events:none;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(-45deg,#ff2d6f,#ff7eb3,#7b2ff7,#ff2d6f);
+  background-size:400% 400%;
+  animation:gradient 15s ease infinite;
+  color:#fff;
+  overflow-x:hidden;
+}
+@keyframes gradient{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
 
-/* Navigation */
-nav{background:#111118;padding:15px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
-nav h2{color:#ff2d55;font-size:28px;}
-nav a{color:#aaa;text-decoration:none;margin-left:20px;font-weight:500;transition:0.3s;}
-nav a:hover{color:#ff2d55;}
+/* NAV */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 8%;
+  backdrop-filter:blur(20px);
+  background:rgba(0,0,0,0.4);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+nav h2{
+  font-weight:800;
+  font-size:26px;
+  letter-spacing:1px;
+}
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:30px;
+}
+nav a{
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
+  position:relative;
+}
+nav a::after{
+  content:'';
+  position:absolute;
+  left:0;
+  bottom:-5px;
+  width:0%;
+  height:2px;
+  background:var(--secondary);
+  transition:0.3s;
+}
+nav a:hover::after{width:100%}
 
-/* Hero */
-.hero{text-align:center;padding:120px 20px 80px;position:relative;overflow:hidden;}
-.hero img{width:150px;margin-bottom:20px;border-radius:12px;}
-.hero h1{font-size:60px;margin-bottom:10px;}
-.hero p.sub{font-size:20px;color:#ffb3d9;margin-bottom:40px;}
-.button{background:linear-gradient(45deg,#ff79aa,#ff2d55);padding:16px 32px;border-radius:12px;text-decoration:none;color:white;font-weight:bold;display:inline-block;transition:0.4s;}
-.button:hover{transform:scale(1.05);background:linear-gradient(45deg,#ff2d55,#ff79aa);}
+/* HERO */
+.hero{
+  text-align:center;
+  padding:120px 20px 80px;
+}
+.hero h1{
+  font-size:64px;
+  font-weight:800;
+}
+.hero p{
+  margin-top:10px;
+  opacity:0.9;
+}
+.hero button{
+  margin-top:30px;
+  padding:15px 35px;
+  border:none;
+  border-radius:50px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.3s;
+}
+.hero button:hover{
+  transform:scale(1.1);
+}
 
-/* Categories */
-.categories{display:flex; justify-content:center; gap:50px; padding:60px 20px; flex-wrap:wrap; position:relative;}
-.card{background:#1c1c2e;padding:30px 20px;width:280px;border-radius:16px;text-align:center;transition:0.4s;cursor:pointer;position:relative;overflow:hidden;}
-.card:hover{transform:translateY(-10px) scale(1.05);background:#222232;}
-.card h3{margin-top:10px;font-size:22px;color:#fff;font-weight:bold;}
-.card p{color:#fff;font-size:15px;margin:15px 0 25px;font-weight:bold;}
+/* CARDS */
+.section{
+  padding:80px 8%;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+.card{
+  background:var(--glass);
+  backdrop-filter:blur(25px);
+  border-radius:20px;
+  padding:30px;
+  transition:0.4s;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,0.1);
+}
+.card:hover{
+  transform:translateY(-10px) scale(1.03);
+  box-shadow:0 0 40px rgba(255,255,255,0.2);
+}
+.card h3{
+  margin-bottom:10px;
+  font-size:22px;
+}
+.price{
+  font-size:20px;
+  font-weight:700;
+  margin-top:15px;
+}
+.buy{
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  background:var(--primary);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+.buy:hover{
+  background:var(--secondary);
+}
 
-/* Footer */
-footer{background:#111118;padding:25px;text-align:center;color:#777;font-size:14px;}
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+}
+.modal.active{
+  opacity:1;
+  pointer-events:auto;
+}
+.modal-content{
+  background:#111118;
+  padding:40px;
+  border-radius:20px;
+  width:90%;
+  max-width:500px;
+  text-align:center;
+  animation:pop 0.3s ease;
+}
+@keyframes pop{
+  from{transform:scale(0.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+.close{
+  margin-top:20px;
+  padding:8px 20px;
+  border:none;
+  border-radius:10px;
+  background:#444;
+  color:#fff;
+  cursor:pointer;
+}
 
-/* Pop-up Modals */
-.modal{display:none;position:fixed;z-index:200;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.8);width:90%;max-width:600px;padding:20px;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.7);opacity:0;pointer-events:none;transition:0.4s;}
-.modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
-.modal h2{text-align:center;margin-top:0;font-weight:bold;color:#fff;}
-.items-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;}
-.item{background:#ffe6f0;border-radius:12px;padding:12px;text-align:center;transition:0.3s;position:relative;cursor:pointer;}
-.item:hover{background:#ffc0d9;transform:scale(1.03);}
-.item h3{margin:5px 0;font-size:16px;font-weight:bold;color:#fff;}
-.item p{font-size:14px;color:#fff;margin:3px 0;font-weight:bold;}
-.item .price{font-weight:bold;font-size:16px;color:#fff;}
-.item .original{text-decoration:line-through;color:#bbb;margin-left:5px;font-weight:bold;}
-.buy-button{padding:6px 10px;border-radius:8px;border:none;margin-top:6px;color:white;cursor:pointer;transition:0.3s;font-weight:bold;background:#ff2d55;}
-.buy-button:hover{opacity:0.8;transform:scale(1.1);}
+/* CLICKER */
+#clicker{
+  font-size:80px;
+  margin-top:20px;
+  cursor:pointer;
+  transition:0.2s;
+}
+.counter{
+  font-size:22px;
+  margin-top:10px;
+}
 
-/* Colors */
-.rank-ultra{background:orange;}
-.rank-cherry{background:red;}
-.rank-cherryplus{background:pink;}
-.crate-epic{background:purple;}
-.crate-elite{background:gray;}
-.crate-ultra{background:orange;}
-.crate-cherry{background:red;}
-.cherry-item{background:linear-gradient(90deg,#ff00ff,#000);color:#fff;font-weight:bold;}
-
-/* Cherry Clicker Modal fully visible */
-#clickerModal{background:linear-gradient(135deg,#ff79aa,#ff2d55);opacity:1 !important;}
-
-/* Cherry Clicker Display */
-#clicker-display{cursor:pointer;transition:transform 0.2s;font-size:80px;font-weight:bold;color:#fff; text-shadow:1px 1px 5px #ffb3d9;}
+footer{
+  text-align:center;
+  padding:30px;
+  opacity:0.6;
+}
 </style>
 </head>
 <body>
 
-<!-- Audio -->
-<audio id="bg-music" src="chill_cherry_biome.mp3" loop autoplay></audio>
-<audio id="click-sound" src="click.mp3"></audio>
-
-<div id="emoji-container"></div>
-
 <nav>
 <h2>CherrySMP</h2>
-<div>
-<a href="#" onclick="openModal('ranksModal')">Ranks</a>
-<a href="#" onclick="openModal('cratesModal')">Crates</a>
-<a href="#" onclick="openModal('creditsModal')">Cherries</a>
-<a href="#" onclick="openModal('clickerModal')">Cherry Clicker</a>
-</div>
+<ul>
+<li><a href="#">Ranks</a></li>
+<li><a href="#">Crates</a></li>
+<li><a href="#">Cherries</a></li>
+<li><a href="#" id="openClicker">Clicker</a></li>
+</ul>
 </nav>
 
-<div class="hero">
-<img src="logo.png" alt="CherrySMP Logo">
+<section class="hero">
 <h1>CherrySMP Store</h1>
-<p class="sub">Valentine's deals 14.2-21.2 | 15% off everything!</p>
-<a class="button" href="#">Browse Store</a>
+<p>Valentine Sale • 15% OFF Everything</p>
+<button onclick="scrollToStore()">Browse Store</button>
+</section>
+
+<section class="section" id="store">
+<div class="grid">
+
+<div class="card">
+<h3>🏆 Ultra Rank</h3>
+<p>3 Homes • /workbench • AFK Bonus</p>
+<div class="price">€2.12</div>
+<button class="buy" onclick="openModal()">Purchase</button>
 </div>
 
-<div class="categories">
-<div class="card" onclick="openModal('ranksModal')"><h3>🏆 Ranks</h3><p>Unlock exclusive commands & perks.</p></div>
-<div class="card" onclick="openModal('cratesModal')"><h3>🎁 Crates</h3><p>Get crate keys & rare rewards.</p></div>
-<div class="card" onclick="openModal('creditsModal')"><h3>💎 Cherries</h3><p>Buy in-game credits instantly.</p></div>
-<div class="card" onclick="openModal('clickerModal')"><h3>🍒 Cherry Clicker</h3><p>Click to earn cherries!</p></div>
+<div class="card">
+<h3>🎁 Ultra Crate</h3>
+<p>Netherite Gear + Rare Drops</p>
+<div class="price">€0.84</div>
+<button class="buy" onclick="openModal()">Purchase</button>
 </div>
 
-<!-- Ranks Modal -->
-<div id="ranksModal" class="modal">
-<h2>🏆 Ranks (15% Off)</h2>
-<div class="items-grid">
-<div class="item rank-ultra"><h3>Ultra</h3><p>3 homes<br>10 auction sells<br>5 orders<br>Own kit every 7 days<br>/workbench<br>AFK +1 cherry/50s</p><p class="price">€2.12<span class="original">€2.49</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item rank-cherryplus"><h3>Cherry+</h3><p>5 homes<br>20 auction sells<br>7 orders<br>Own kit every 7 days<br>/loom<br>AFK +1 cherry/30s</p><p class="price">€7.64<span class="original">€8.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item rank-cherry"><h3>Cherry</h3><p>4 homes<br>15 auction sells<br>7 orders<br>Own kit every 7 days<br>/anvil /grindstone /smithing table<br>AFK +1 cherry/40s</p><p class="price">€4.24<span class="original">€4.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-</div>
-<button class="buy-button" onclick="closeModal('ranksModal')">Close</button>
+<div class="card">
+<h3>💎 1000 Cherries</h3>
+<p>Ultimate Credit Pack</p>
+<div class="price">€3.65</div>
+<button class="buy" onclick="openModal()">Purchase</button>
 </div>
 
-<!-- Crates Modal -->
-<div id="cratesModal" class="modal">
-<h2>🎁 Crates (15% Off)</h2>
-<div class="items-grid">
-<div class="item crate-epic"><h3>Epic</h3><p>Average diamond gear</p><p class="price">€0.16<span class="original">€0.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item crate-elite"><h3>Elite</h3><p>Good diamond gear</p><p class="price">€0.33<span class="original">€0.39</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item crate-ultra"><h3>Ultra</h3><p>Netherite gear + bow/trident/spear</p><p class="price">€0.84<span class="original">€0.99</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item crate-cherry"><h3>Cherry</h3><p>Max netherite gear + max maces</p><p class="price">€1.27<span class="original">€1.49</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
 </div>
-<button class="buy-button" onclick="closeModal('cratesModal')">Close</button>
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<h2>Complete Purchase</h2>
+<p>Open a ticket on Discord to buy this product.</p>
+<br>
+<a href="https://discord.gg/QF5kKrX8" target="_blank">
+<button class="buy">Join Discord</button>
+</a>
+<button class="close" onclick="closeModal()">Close</button>
+</div>
 </div>
 
-<!-- Cherries Modal -->
-<div id="creditsModal" class="modal">
-<h2>💎 Cherries (15% Off)</h2>
-<div class="items-grid">
-<div class="item cherry-item"><h3>100</h3><p>Small boost</p><p class="price">€0.43<span class="original">€0.50</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item cherry-item"><h3>250</h3><p>Medium boost</p><p class="price">€0.93<span class="original">€1.09</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item cherry-item"><h3>500</h3><p>Large boost</p><p class="price">€1.86<span class="original">€2.19</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
-<div class="item cherry-item"><h3>1000</h3><p>Ultimate pack</p><p class="price">€3.65<span class="original">€4.29</span></p><button class="buy-button" onclick="openBuyModal()">Buy</button></div>
+<!-- CLICKER MODAL -->
+<div class="modal" id="clickerModal">
+<div class="modal-content">
+<h2>Cherry Clicker</h2>
+<div id="clicker">🍒</div>
+<div class="counter">Cherries: <span id="count">0</span></div>
+<button class="close" onclick="closeClicker()">Close</button>
 </div>
-<button class="buy-button" onclick="closeModal('creditsModal')">Close</button>
 </div>
 
-<!-- Cherry Clicker Modal -->
-<div id="clickerModal" class="modal">
-<h2>🍒 Cherry Clicker</h2>
-<p>Click the cherry to earn cherries! 1 second cooldown.</p>
-<div id="clicker-display" style="text-align:center;margin-top:20px;">🍒 0</div>
-<button class="buy-button" onclick="closeModal('clickerModal')">Close</button>
-</div>
-
-<!-- Buy Modal -->
-<div id="buyModal" class="modal">
-<h2>Purchase Info</h2>
-<p>Make a ticket on Discord for purchase!</p>
-<p><a href="https://discord.gg/QF5kKrX8" target="_blank" style="color:#ff79aa;">Join Discord</a></p>
-<button class="buy-button" onclick="closeModal('buyModal')">Close</button>
-</div>
-
-<footer>© 2026 CherrySMP • Not affiliated with Mojang</footer>
+<footer>
+© 2026 CherrySMP • Not affiliated with Mojang
+</footer>
 
 <script>
-// Emoji rain
-const emojis=['❤️','🍒','💖','💕','❣️'];
-for(let i=0;i<70;i++){
-  const span=document.createElement('span');
-  span.classList.add('emoji');
-  span.style.left=Math.random()*100+'vw';
-  span.style.fontSize=(12+Math.random()*25)+'px';
-  span.style.animationDuration=(4+Math.random()*4)+'s';
-  span.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-  document.getElementById('emoji-container').appendChild(span);
+function scrollToStore(){
+  document.getElementById('store').scrollIntoView({behavior:'smooth'});
 }
 
-// Cherry clicker inside modal
-let cherryClicks=parseInt(localStorage.getItem('cherryClicks'))||0;
-let clickCooldown=false;
-const clickerDisplay=document.getElementById('clicker-display');
-function updateCherryDisplay(){clickerDisplay.innerText=`🍒 ${cherryClicks}`;}
-updateCherryDisplay();
-clickerDisplay.onclick=function(){
-  if(clickCooldown) return;
-  cherryClicks++;
-  localStorage.setItem('cherryClicks',cherryClicks);
-  updateCherryDisplay();
-  clickCooldown=true;
-  clickerDisplay.style.transform='scale(1.4)';
-  document.getElementById('click-sound').play();
-  setTimeout(()=>{clickCooldown=false;clickerDisplay.style.transform='scale(1)';},1000);
-};
-
-// Modal logic
-function openModal(id){
-  const modal=document.getElementById(id);
-  modal.style.display='block';
-  setTimeout(()=>modal.classList.add('show'),10);
+function openModal(){
+  document.getElementById('modal').classList.add('active');
 }
-function closeModal(id){
-  const modal=document.getElementById(id);
-  modal.classList.remove('show');
-  setTimeout(()=>modal.style.display='none',400);
+function closeModal(){
+  document.getElementById('modal').classList.remove('active');
 }
-function openBuyModal(){openModal('buyModal');}
 
-// Close clicking outside
-window.onclick=function(event){
-  document.querySelectorAll('.modal').forEach(modal=>{
-    if(event.target===modal){closeModal(modal.id);}
-  });
-};
+const clickerModal=document.getElementById('clickerModal');
+document.getElementById('openClicker').addEventListener('click',()=>{
+  clickerModal.classList.add('active');
+});
+function closeClicker(){
+  clickerModal.classList.remove('active');
+}
+
+let count=parseInt(localStorage.getItem('cherryCount'))||0;
+const counter=document.getElementById('count');
+counter.textContent=count;
+
+let cooldown=false;
+document.getElementById('clicker').addEventListener('click',()=>{
+  if(cooldown) return;
+  cooldown=true;
+  count++;
+  counter.textContent=count;
+  localStorage.setItem('cherryCount',count);
+  document.getElementById('clicker').style.transform='scale(1.3)';
+  setTimeout(()=>{
+    cooldown=false;
+    document.getElementById('clicker').style.transform='scale(1)';
+  },500);
+});
+
+window.addEventListener('click',(e)=>{
+  if(e.target.classList.contains('modal')){
+    e.target.classList.remove('active');
+  }
+});
 </script>
+
 </body>
 </html>
