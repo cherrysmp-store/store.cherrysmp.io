@@ -8,8 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-
-/* ROOT */
 :root{
   --primary:#ff2d6f;
   --secondary:#ff7eb3;
@@ -19,7 +17,6 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
   font-family:'Inter',sans-serif;
   background:linear-gradient(-45deg,#ff2d6f,#7b2ff7,#ff7eb3,#ff2d6f);
@@ -27,8 +24,8 @@ body{
   animation:gradient 18s ease infinite;
   color:#fff;
   min-height:100vh;
+  overflow-x:hidden;
 }
-
 @keyframes gradient{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
@@ -53,15 +50,14 @@ nav{
   backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
 }
-
 nav ul{display:flex;gap:30px;list-style:none;}
 nav a{color:white;text-decoration:none;font-weight:600;}
 nav a:hover{color:var(--accent);}
 
 /* HERO */
-.hero{text-align:center;padding:120px 20px 80px;}
-.hero h2{font-size:64px;font-weight:800;}
-.hero p{margin-top:15px;opacity:0.85;}
+.hero{text-align:center;padding:80px 20px 40px;}
+.hero h2{font-size:48px;font-weight:800;}
+.hero p{margin-top:10px;opacity:0.85;}
 
 /* CATEGORIES */
 .categories{
@@ -69,10 +65,10 @@ nav a:hover{color:var(--accent);}
   justify-content:center;
   flex-wrap:wrap;
   gap:20px;
-  padding:40px 8%;
+  padding:20px 8%;
 }
 .category-btn{
-  padding:14px 28px;
+  padding:12px 24px;
   border-radius:50px;
   border:none;
   font-weight:700;
@@ -88,28 +84,26 @@ nav a:hover{color:var(--accent);}
 }
 
 /* PRODUCTS */
-.products{padding:40px 8% 100px;}
+.products{padding:20px 8% 80px;}
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
+  gap:20px;
 }
 .card{
   background:var(--glass);
   border:1px solid var(--border);
   backdrop-filter:blur(25px);
   border-radius:20px;
-  padding:30px;
+  padding:20px;
   display:flex;
   flex-direction:column;
 }
-.card:hover{
-  transform:translateY(-10px);
-}
+.card:hover{transform:translateY(-5px);}
 .price{font-size:20px;font-weight:800;margin-top:auto;}
 .buy{
-  margin-top:15px;
-  padding:10px;
+  margin-top:10px;
+  padding:8px;
   border-radius:10px;
   border:none;
   font-weight:700;
@@ -118,12 +112,21 @@ nav a:hover{color:var(--accent);}
   color:white;
 }
 .buy:hover{background:var(--secondary);}
+.popular-badge{
+  background:linear-gradient(90deg,#ff2d6f,#ff7eb3);
+  padding:4px 10px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:10px;
+  display:inline-block;
+}
 
-/* MODAL */
+/* CART MODAL */
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.75);
+  background:rgba(0,0,0,0.8);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -137,13 +140,13 @@ nav a:hover{color:var(--accent);}
 }
 .modal-content{
   background:#111118;
-  padding:40px;
+  padding:30px;
   border-radius:20px;
   width:90%;
-  max-width:500px;
+  max-width:450px;
 }
 .close{
-  margin-top:20px;
+  margin-top:15px;
   padding:8px 20px;
   border:none;
   border-radius:10px;
@@ -153,27 +156,16 @@ nav a:hover{color:var(--accent);}
 }
 
 /* STATS */
-.stats{
-  padding:80px 8%;
-  text-align:center;
-}
-.stats h2{font-size:40px;margin-bottom:40px;}
-.stat-grid{
-  display:flex;
-  justify-content:center;
-  gap:80px;
-  flex-wrap:wrap;
-}
-
-footer{text-align:center;padding:40px;opacity:0.6;}
-
+.stats{padding:60px 8%;text-align:center;}
+.stats h2{font-size:36px;margin-bottom:30px;}
+.stat-grid{display:flex;justify-content:center;gap:50px;flex-wrap:wrap;}
+.stat-grid div h3{font-size:28px;margin-bottom:5px;}
+footer{text-align:center;padding:30px;opacity:0.6;}
 </style>
 </head>
 <body>
 
-<div id="saleBanner">
-🔥 SUMMER SALE - 20% OFF EVERYTHING | Use Code: CHERRY20
-</div>
+<div id="saleBanner">🔥 SUMMER SALE - 20% OFF EVERYTHING | Use Code: CHERRY20</div>
 
 <nav>
 <h1>CherrySMP Store</h1>
@@ -213,76 +205,34 @@ footer{text-align:center;padding:40px;opacity:0.6;}
 </div>
 </section>
 
-<footer>
-© 2026 CherrySMP • Not affiliated with Mojang
-</footer>
+<footer>© 2026 CherrySMP • Not affiliated with Mojang</footer>
 
 <!-- CART MODAL -->
 <div class="modal" id="cartModal">
 <div class="modal-content">
 <h2>Your Cart</h2>
-
-<input type="text" id="mcUsername" placeholder="Enter Minecraft Username" style="width:100%;padding:10px;margin-bottom:15px;border-radius:10px;border:none;">
-
-<div id="cartItems"></div>
-
-<input type="text" id="discountCode" placeholder="Discount Code" style="width:100%;padding:10px;margin-top:15px;border-radius:10px;border:none;">
-<button id="applyDiscount" class="buy">Apply Code</button>
-
-<h3 style="margin-top:20px;">Total: €<span id="cartTotal">0.00</span></h3>
-
+<input type="text" id="mcUsername" placeholder="Enter Minecraft Username" style="width:100%;padding:10px;margin-bottom:10px;border-radius:10px;border:none;">
+<div id="cartItems" style="max-height:200px;overflow-y:auto;margin-bottom:10px;"></div>
+<input type="text" id="discountCode" placeholder="Discount Code" style="width:100%;padding:10px;margin-bottom:10px;border-radius:10px;border:none;">
+<button id="applyDiscount" class="buy" style="width:100%;">Apply Code</button>
+<h3 style="margin-top:10px;">Total: €<span id="cartTotal">0.00</span></h3>
 <a id="paypalCheckout" href="#" target="_blank">
-<button class="buy" style="width:100%;margin-top:15px;">Pay with PayPal</button>
+<button class="buy" style="width:100%;margin-top:10px;">Pay with PayPal</button>
 </a>
-
 <button class="close" id="closeCart">Close</button>
 </div>
 </div>
 
 <script>
-
 /* STORE DATA */
-const storeData = {
-crates:[
-{name:"Snow Key",price:0.19},
-{name:"Ocean Key",price:0.49},
-{name:"Slime Key",price:0.99},
-{name:"Maple Key",price:1.79},
-{name:"Cherry Key",price:2.49,popular:true}
-],
-ranks:[
-{name:"VIP (Lifetime)",price:2},
-{name:"Maple (Lifetime)",price:4},
-{name:"Cherry (Lifetime)",price:7},
-{name:"Cherry+ (Lifetime)",price:10,popular:true},
-{name:"VIP (30d)",price:1},
-{name:"Maple (30d)",price:2},
-{name:"Cherry (30d)",price:3.5,popular:true},
-{name:"Cherry+ (30d)",price:5}
-],
-credits:[
-{name:"100x Credits",price:1},
-{name:"250x Credits",price:2.29},
-{name:"500x Credits",price:4.69},
-{name:"1000x Credits",price:9.19,popular:true},
-{name:"2500x Credits",price:23.5}
-],
-spawners:[
-{name:"Skeleton x1",price:0.05},
-{name:"Skeleton x10",price:0.5},
-{name:"Skeleton x25",price:1.09},
-{name:"Skeleton x50",price:2.19},
-{name:"Skeleton x100",price:4.49}
-],
-bundles:[
-{name:"Starter Bundle",price:3.99,desc:"VIP Lifetime + 2 Snow Keys"},
-{name:"Maple Bundle",price:6.99,desc:"Maple Lifetime + 2 Maple Keys"},
-{name:"Cherry Elite Bundle",price:11.99,desc:"Cherry Lifetime + 5 Cherry Keys"},
-{name:"Ultimate Supporter",price:19.99,desc:"Cherry+ 30d + 10 Cherry Keys + 1000 Credits"}
-]
+const storeData={
+crates:[{name:"Snow Key",price:0.19},{name:"Ocean Key",price:0.49},{name:"Slime Key",price:0.99},{name:"Maple Key",price:1.79},{name:"Cherry Key",price:2.49,popular:true}],
+ranks:[{name:"VIP (Lifetime)",price:2},{name:"Maple (Lifetime)",price:4},{name:"Cherry (Lifetime)",price:7},{name:"Cherry+ (Lifetime)",price:10,popular:true},{name:"VIP (30d)",price:1},{name:"Maple (30d)",price:2},{name:"Cherry (30d)",price:3.5,popular:true},{name:"Cherry+ (30d)",price:5}],
+credits:[{name:"100x Credits",price:1},{name:"250x Credits",price:2.29},{name:"500x Credits",price:4.69},{name:"1000x Credits",price:9.19,popular:true},{name:"2500x Credits",price:23.5}],
+spawners:[{name:"Skeleton x1",price:0.05},{name:"Skeleton x10",price:0.5},{name:"Skeleton x25",price:1.09},{name:"Skeleton x50",price:2.19},{name:"Skeleton x100",price:4.49}],
+bundles:[{name:"Starter Bundle",price:3.99,desc:"VIP Lifetime + 2 Snow Keys"},{name:"Maple Bundle",price:6.99,desc:"Maple Lifetime + 2 Maple Keys"},{name:"Cherry Elite Bundle",price:11.99,desc:"Cherry Lifetime + 5 Cherry Keys"},{name:"Ultimate Supporter",price:19.99,desc:"Cherry+ 30d + 10 Cherry Keys + 1000 Credits"}]
 };
 
-/* FULL CART SYSTEM + DISCOUNTS + STATS */
 let cart=[],discount=0;
 const discountCodes={"CHERRY20":20,"VIP10":10};
 
@@ -297,15 +247,15 @@ const cartCount=document.getElementById("cartCount");
 function renderCategory(category){
 grid.innerHTML="";
 storeData[category].forEach(product=>{
-let finalPrice=product.price-(product.price*discount/100);
+let price=product.price*(1-discount/100);
 const card=document.createElement("div");
 card.classList.add("card");
 card.innerHTML=`
-${product.popular?'<div style="background:linear-gradient(90deg,#ff2d6f,#ff7eb3);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:10px;box-shadow:0 0 15px #ff2d6f;">⭐ MOST POPULAR</div>':''}
+${product.popular?'<span class="popular-badge">⭐ MOST POPULAR</span>':''}
 <h3>${product.name}</h3>
 <p>${product.desc||"Premium server item"}</p>
 ${discount>0?`<div style="text-decoration:line-through;opacity:0.6;">€${product.price.toFixed(2)}</div>`:""}
-<div class="price">€${finalPrice.toFixed(2)}</div>
+<div class="price">€${price.toFixed(2)}</div>
 <button class="buy">Add to Cart</button>
 `;
 card.querySelector(".buy").onclick=()=>addToCart(product);
@@ -325,7 +275,7 @@ let total=0;
 cart.forEach((item,i)=>{
 total+=item.price*item.qty;
 cartItems.innerHTML+=`
-<div style="display:flex;justify-content:space-between;margin:10px 0;">
+<div style="display:flex;justify-content:space-between;margin:5px 0;">
 <span>${item.name} x${item.qty}</span>
 <div>
 <button onclick="changeQty(${i},-1)">-</button>
@@ -333,10 +283,10 @@ cartItems.innerHTML+=`
 </div>
 </div>`;
 });
-total=total-(total*discount/100);
+total=total*(1-discount/100);
 cartTotal.textContent=total.toFixed(2);
 cartCount.textContent=cart.reduce((a,b)=>a+b.qty,0);
-document.getElementById("paypalCheckout").href=`https://www.paypal.com/paypalme/TimCherry100/${total.toFixed(2)}`;
+document.getElementById("paypalCheckout").href=`https://www.paypal.com/paypalme/TimCherry000/${total.toFixed(2)}`;
 }
 
 function changeQty(i,amt){
@@ -345,9 +295,9 @@ if(cart[i].qty<=0)cart.splice(i,1);
 updateCart();
 }
 
-cartBtn.onclick=(e)=>{e.preventDefault();cartModal.classList.add("active");};
+cartBtn.onclick=e=>{e.preventDefault();cartModal.classList.add("active");};
 closeCart.onclick=()=>cartModal.classList.remove("active");
-window.onclick=(e)=>{if(e.target===cartModal)cartModal.classList.remove("active");};
+window.onclick=e=>{if(e.target===cartModal)cartModal.classList.remove("active");};
 
 document.getElementById("applyDiscount").onclick=()=>{
 let code=document.getElementById("discountCode").value.toUpperCase();
@@ -355,7 +305,7 @@ if(discountCodes[code]){discount=discountCodes[code];alert("Discount Applied");r
 else alert("Invalid Code");
 };
 
-document.getElementById("paypalCheckout").onclick=(e)=>{
+document.getElementById("paypalCheckout").onclick=e=>{
 if(!document.getElementById("mcUsername").value.trim()){e.preventDefault();alert("Enter Minecraft username.");}
 if(cart.length===0){e.preventDefault();alert("Cart is empty.");}
 };
@@ -364,6 +314,7 @@ document.querySelectorAll(".category-btn").forEach(btn=>{
 btn.onclick=()=>{document.querySelectorAll(".category-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");renderCategory(btn.dataset.category);};
 });
 
+/* Animated stats */
 document.querySelectorAll(".stat").forEach(stat=>{
 let target=parseFloat(stat.dataset.target),count=0,inc=target/100;
 function update(){count+=inc;if(count<target){stat.textContent=target%1===0?Math.floor(count):count.toFixed(1);requestAnimationFrame(update);}else stat.textContent=target;}
@@ -371,7 +322,6 @@ update();
 });
 
 renderCategory("crates");
-
 </script>
 
 </body>
